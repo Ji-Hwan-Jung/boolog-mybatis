@@ -1,0 +1,33 @@
+# 로컬 환경
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+
+  sql:
+    init:
+      platform: local
+      mode: EMBEDDED
+
+  session:
+    store-type: JDBC
+
+  h2:
+    console:
+      enabled: true
+
+mybatis:
+  type-aliases-package: com.stoph.boolog
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations:
+    - classpath:mapper/h2/**/*.xml
+
+pagehelper:
+  helper-dialect: h2
+  reasonable: true

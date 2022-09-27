@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stoph.boolog.domain.posts.PostsMapper">
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into posts (member_id, thumbnail, title, content, tags, created_date, modified_date)
+        values (#{memberId}, #{thumbnail}, #{title}, #{content}, #{tags}, convert_tz(now(), 'UTC', 'Asia/Seoul'), convert_tz(now(), 'UTC', 'Asia/Seoul'))
+    </insert>
+
+    <update id="update">
+        update posts
+        set title = #{updateParam.title},
+            content = #{updateParam.content},
+            tags = #{updateParam.tags},
+            modified_date = convert_tz(now(), 'UTC', 'Asia/Seoul')
+        where id = #{id}
+    </update>
+
+    <select id="findById" resultType="PostsResponseDto">
+        select p.id, m.name as author, p.thumbnail, p.title, p.content, p.liked, p.tags, p.created_date, p.modified_date
+        from posts p
+        inner join member m
+        on p.member_id = m.id
+        where p.id = #{id}
+    </select>
+
+    <select id="findAll" resultType="PostsResponseDto">
+        select p.id, m.name as author, p.thumbnail, p.title, p.content, p.liked, p.tags, p.created_date, p.modified_date
+        from posts p
+        inner join member m on p.member_id = m.id
+        <if test="tag != null and tag != ''">
+            inner join tag t on p.id = t.posts_id
+        </if>
+        <where>
+            <if test="keyword != '' and section == 'search'">
+                and p.title like concat('%', #{keyword}, '%')
+                or p.content like concat('%', #{keyword}, '%')
+                or m.name like concat('%', #{keyword}, '%')
+            </if>
+
+            <if test="section == 'popular'">
+                <if test="period == 'daily'">
+                    and timestampdiff(hour, p.created_date, NOW()) between 0 and 23
+                </if>
+                <if test="period == 'weekly'">
+                    and timestampdiff(day, p.created_date, NOW()) between 0 and 6
+                </if>
+                <if test="period == 'monthly'">
+                    and timestampdiff(month, p.created_date, NOW()) between 0 and 1
+                </if>
+                <if test="period == 'yearly'">
+                    and timestampdiff(year, p.created_date, NOW()) between 0 and 1
+                </if>
+            </if>
+
+            <if test="author != null and author != ''">
+                and m.name = #{author}
+            </if>
+
+            <if test="tag != null and tag != ''">
+                and t.tag_name = #{tag}
+            </if>
+        </where>
+
+        order by <if test="section == 'popular'">p.liked desc,</if> p.created_date desc
+        <if test="section == 'mainPopular' or section == 'mainRecent'">
+            limit 4
+        </if>
+    </select>
+
+    <delete id="delete">
+        delete
+        from posts
+        where id = #{id}
+    </delete>
+
+    <insert id="saveLikedPost">
+        insert into liked_posts(member_id, posts_id)
+        values(#{memberId}, #{postId})
+    </insert>
+
+    <delete id="deleteLikedPost">
+        delete from liked_posts
+        where member_id = #{memberId}
+        and posts_id = #{postId}
+    </delete>
+
+    <select id="getLiked" resultType="Long">
+        select liked from posts
+        where id = #{id}
+    </select>
+
+    <select id="isLiked" resultType="Long">
+        select count(*)
+        from liked_posts
+        where member_id = #{memberId}
+        and posts_id = #{postId}
+    </select>
+    
+    <select id="findAllLikedPost" resultType="PostsResponseDto">
+        select p.id, m.name as author, p.thumbnail, p.title, p.content, p.liked, p.tags, p.created_date, p.modified_date
+        from posts p
+        inner join member m
+        on p.member_id = m.id
+        inner join liked_posts l
+        on p.id = l.posts_id
+        where l.member_id = #{id}
+    </select>
+
+    <insert id="tagging">
+        insert into tag (tag_name, posts_id)
+        values (#{name}, #{postId})
+    </insert>
+
+    <delete id="deleteTags">
+        delete
+        from tag
+        where posts_id = #{id}
+    </delete>
+
+    <select id="findTags" resultType="String">
+        select tag_name
+        from tag
+        where posts_id = #{id}
+    </select>
+
+    <select id="findTagsAndCount" resultType="TagResponseDto">
+        select t.tag_name, count(t.tag_name) as count
+        from tag t
+        inner join posts p
+        on t.posts_id = p.id
+        where p.member_id = #{id}
+        group by t.tag_name
+    </select>
+</mapper>
