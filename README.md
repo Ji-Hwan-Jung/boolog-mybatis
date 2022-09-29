@@ -36,8 +36,11 @@
 - 페이징 처리 - [pagehelper](https://github.com/pagehelper/pagehelper-spring-boot)
 <br>
 
-## 데모
-[Boolog](http://www.boolog.kro.kr)
+## 데모 - [Boolog](http://www.boolog.kro.kr)
+- 무료 서비스를 주로 사용하고 있어서 성능이 좋지 않아 전체적으로 로드 속도가 다소 느립니다.
+  - 배포환경 - [Google Compute Engine](https://cloud.google.com/compute?hl=ko)
+  - 세션 관리 - [redis.com](https://redis.com/)
+  - 데이터베이스 - [db4free.net](https://www.db4free.net/)
 
 <br>
 
