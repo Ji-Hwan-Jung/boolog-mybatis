@@ -20,8 +20,8 @@
 
 ## 기술 스택
 - Frontend : HTML/CSS, Javascript, Bootstrap, Thymeleaf
-- Backend : Java11, Spring Framework, Spring Boot, Spring MVC, Spring Security, MyBatis
-- DevOps : Gradle, MySQL, Redis, GCP(Compute Engine)
+- Backend : Java11, Spring Framework, Spring Boot, Spring MVC, Spring Security, Spring Session, MyBatis
+- DevOps : Gradle, MySQL, Redis, Google Compute Engine
 - Tools : IntelliJ IDEA, VScode
 <br>
 
