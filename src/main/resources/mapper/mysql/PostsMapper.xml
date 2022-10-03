@@ -41,16 +41,16 @@
 
             <if test="section == 'popular'">
                 <if test="period == 'daily'">
-                    and timestampdiff(hour, p.created_date, NOW()) between 0 and 23
+                    and timestampdiff(hour, p.created_date, convert_tz(now(), 'UTC', 'Asia/Seoul')) between 0 and 23
                 </if>
                 <if test="period == 'weekly'">
-                    and timestampdiff(day, p.created_date, NOW()) between 0 and 6
+                    and timestampdiff(day, p.created_date, convert_tz(now(), 'UTC', 'Asia/Seoul')) between 0 and 6
                 </if>
                 <if test="period == 'monthly'">
-                    and timestampdiff(month, p.created_date, NOW()) between 0 and 1
+                    and timestampdiff(month, p.created_date, convert_tz(now(), 'UTC', 'Asia/Seoul')) between 0 and 1
                 </if>
                 <if test="period == 'yearly'">
-                    and timestampdiff(year, p.created_date, NOW()) between 0 and 1
+                    and timestampdiff(year, p.created_date, convert_tz(now(), 'UTC', 'Asia/Seoul')) between 0 and 1
                 </if>
             </if>
 
