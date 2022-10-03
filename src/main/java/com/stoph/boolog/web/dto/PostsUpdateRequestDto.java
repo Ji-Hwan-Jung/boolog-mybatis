@@ -11,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 @ToString
 public class PostsUpdateRequestDto {
 
+    private String description;
     @NotBlank(message = "제목을 입력해주세요.")
     private String title;
 
@@ -20,9 +21,10 @@ public class PostsUpdateRequestDto {
     private String tags;
 
     @Builder
-    public PostsUpdateRequestDto(String title, String content, String tags) {
+    public PostsUpdateRequestDto(String description, String title, String content, String tags) {
+        this.description = description;
         this.title = title;
         this.content = content;
-        this.tags = tags;
+        this.tags = tags.trim().equals("") ? null : tags.trim();
     }
 }

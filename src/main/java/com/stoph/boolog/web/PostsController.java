@@ -158,7 +158,7 @@ public class PostsController {
 
         Long postId = postsService.save(post.toEntity());
 
-        if (!post.getTags().equals("")) {
+        if (post.getTags() != null) {
             List<String> tags = Arrays.stream(post.getTags().split(","))
                     .map(tag -> tag.trim())
                     .collect(Collectors.toList());
@@ -199,12 +199,14 @@ public class PostsController {
             postsService.deleteTags(postId);
 
             //태그 문자열을 받아서 쉼표를 구분자로하여 리스트로 변환
-            List<String> tags = Arrays.stream(post.getTags().split(","))
-                    .map(tag -> tag.trim())
-                    .collect(Collectors.toList());
+            if (post.getTags() != null) {
+                List<String> tags = Arrays.stream(post.getTags().split(","))
+                        .map(tag -> tag.trim())
+                        .collect(Collectors.toList());
 
-            //리스트의 각 태그들 DB에 삽입
-            tags.forEach(tag -> postsService.tagging(postId, tag));
+                //리스트의 각 태그들 DB에 삽입
+                tags.forEach(tag -> postsService.tagging(postId, tag));
+            }
         }
 
         return postId.toString();

@@ -15,6 +15,8 @@ public class PostsSaveRequestDto {
 
     private String thumbnail;
 
+    private String description;
+
     @NotBlank(message = "제목을 입력해주세요.")
     private String title;
 
@@ -24,21 +26,20 @@ public class PostsSaveRequestDto {
     private String tags;
 
     @Builder
-    public PostsSaveRequestDto(Long memberId, String thumbnail, String title, String content, String tags) {
+    public PostsSaveRequestDto(Long memberId, String thumbnail, String description, String title, String content, String tags) {
         this.memberId = memberId;
         this.thumbnail = thumbnail;
+        this.description = description.trim();
         this.title = title.trim();
         this.content = content.trim();
-        this.tags = tags.trim();
-        if (tags.equals("")) {
-            this.tags = null;
-        }
+        this.tags = tags.trim().equals("") ? null : tags.trim();
     }
 
     public Posts toEntity() {
         return Posts.builder()
                 .memberId(this.memberId)
                 .thumbnail(this.thumbnail)
+                .description(this.description)
                 .title(this.title)
                 .content(this.content)
                 .tags(this.tags)

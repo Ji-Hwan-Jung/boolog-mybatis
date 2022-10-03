@@ -16,6 +16,7 @@ public class PostsResponseDto {
     private Long id;
     private String author;
     private String thumbnail;
+    private String description;
     private String title;
     private String content;
     private Long liked;
@@ -24,10 +25,11 @@ public class PostsResponseDto {
     private LocalDateTime modifiedDate;
 
     @Builder
-    public PostsResponseDto(Long id, String author, String thumbnail, String title, String content, Long liked, String tags, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    public PostsResponseDto(Long id, String author, String thumbnail, String description, String title, String content, Long liked, String tags, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.author = author;
         this.thumbnail = thumbnail;
+        this.description = description;
         this.title = title;
         this.content = content;
         this.liked = liked;

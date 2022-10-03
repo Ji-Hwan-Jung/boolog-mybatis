@@ -14,6 +14,8 @@ public class Posts {
     private Long id;
     private Long memberId;
     private String thumbnail;
+
+    private String description;
     private String title;
     private String content;
     private Integer liked;
@@ -22,9 +24,10 @@ public class Posts {
     private LocalDateTime modifiedDate;
 
     @Builder
-    public Posts(Long memberId, String thumbnail, String title, String content, String tags) {
+    public Posts(Long memberId, String thumbnail, String description, String title, String content, String tags) {
         this.memberId = memberId;
         this.thumbnail = thumbnail;
+        this.description = description;
         this.title = title;
         this.content = content;
         this.tags = tags;
