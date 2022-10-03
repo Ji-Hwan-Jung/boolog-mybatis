@@ -4,13 +4,14 @@
 <mapper namespace="com.stoph.boolog.domain.posts.PostsMapper">
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        insert into posts (member_id, thumbnail, title, content, tags)
-        values (#{memberId}, #{thumbnail}, #{title}, #{content}, #{tags})
+        insert into posts (member_id, thumbnail, description, title, content, tags)
+        values (#{memberId}, #{thumbnail}, #{description}, #{title}, #{content}, #{tags})
     </insert>
 
     <update id="update">
         update posts
-        set title = #{updateParam.title},
+        set description = #{updateParam.description},
+            title = #{updateParam.title},
             content = #{updateParam.content},
             tags = #{updateParam.tags},
             modified_date = CURRENT_TIMESTAMP
@@ -18,7 +19,7 @@
     </update>
 
     <select id="findById" resultType="PostsResponseDto">
-        select p.id, m.name as author, p.thumbnail, p.title, p.content, p.liked, p.tags, p.created_date, p.modified_date
+        select p.id, m.name as author, p.thumbnail, p.description, p.title, p.content, p.liked, p.tags, p.created_date, p.modified_date
         from posts p
         inner join member m
         on p.member_id = m.id
@@ -26,7 +27,7 @@
     </select>
 
     <select id="findAll" resultType="PostsResponseDto">
-        select p.id, m.name as author, p.thumbnail, p.title, p.content, p.liked, p.tags, p.created_date, p.modified_date
+        select p.id, m.name as author, p.thumbnail, p.description, p.title, p.content, p.liked, p.tags, p.created_date, p.modified_date
         from posts p
         inner join member m on p.member_id = m.id
         <if test="tag != null and tag != ''">
@@ -36,6 +37,7 @@
             <if test="keyword != '' and section == 'search'">
                 and p.title like concat('%', #{keyword}, '%')
                 or p.content like concat('%', #{keyword}, '%')
+                or p.description like concat('%', #{keyword}, '%')
                 or m.name like concat('%', #{keyword}, '%')
             </if>
 
@@ -99,7 +101,7 @@
     </select>
     
     <select id="findAllLikedPost" resultType="PostsResponseDto">
-        select p.id, m.name as author, p.thumbnail, p.title, p.content, p.liked, p.tags, p.created_date, p.modified_date
+        select p.id, m.name as author, p.thumbnail, p.description, p.title, p.content, p.liked, p.tags, p.created_date, p.modified_date
         from posts p
         inner join member m
         on p.member_id = m.id
