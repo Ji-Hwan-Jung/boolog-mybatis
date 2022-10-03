@@ -57,7 +57,7 @@
     <div class="mb-4" id="editor"></div>
     <div class="row justify-content-end">
         <div class="col-auto">
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#postSubmit">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#postSubmit" onclick="publish('edit')">
                 제출하기
             </button>
             <button
@@ -111,6 +111,7 @@
                         </div>
                         <div class="col d-flex flex-column">
                 <textarea
+                        id="description"
                         class="form-control mb-auto"
                         placeholder="작성한 글에 대해 짧은 설명을 달아주세요."
                         maxlength="150"
@@ -120,6 +121,7 @@
                     height: 100%;
                     font-size: 0.83rem;
                   "
+                        th:value="${post.description}"
                 ></textarea>
                             <div class="d-flex">
                                 <button
@@ -160,7 +162,9 @@
     const tooltipTrigger = document.querySelector('#tags');
     const tooltip = new bootstrap.Tooltip(tooltipTrigger);
 
-    let id = [[${post.id}]]
+    let id = [[${post.id}]];
+    let postDescription = [[${post.description}]];
+
 </script>
 <script src="/js/post.js"></script>
 </body>

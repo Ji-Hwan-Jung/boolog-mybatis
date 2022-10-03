@@ -15,6 +15,7 @@ function deleteThumbnail() {
 
 function savePost() {
 
+    let description = document.querySelector('#description').value;
     let title = document.querySelector('#title').value;
     let content = '';
     let tags = document.querySelector('#tags').value;
@@ -40,6 +41,7 @@ function savePost() {
     const formData = new FormData();
     formData.append('memberId', memberId);
     //formData.append('thumbnail', 'http://chiye1890.dothome.co.kr/img/Spring_Logo.svg');
+    formData.append('description', description);
     formData.append('title', title);
     formData.append('content', content);
     formData.append('tags', tags);
@@ -60,6 +62,7 @@ function savePost() {
 
 function updatePost() {
 
+    let description = document.querySelector('#description').value;
     let title = document.querySelector('#title').value;
     let content = '';
     let tags = document.querySelector('#tags').value;
@@ -83,6 +86,7 @@ function updatePost() {
     }
 
     const formData = new FormData();
+    formData.append('description', description);
     formData.append('title', title);
     formData.append('content', content);
     formData.append('tags', tags);
@@ -167,3 +171,16 @@ function thumbUpProc(param) {
     }
 }
 
+function publish(mode) {
+
+    const description = document.querySelector('#description');
+    const content = editor.isMarkdownMode() ? editor.getMarkdown() : editor.getHTML();
+
+    if (mode === 'write') {
+        description.value = content.substring(0, 150);
+    }
+
+    if (mode === 'edit') {
+        description.value = postDescription;
+    }
+}
