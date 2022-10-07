@@ -29,8 +29,8 @@ public class MemberController {
     private final PostsService postsService;
     private final MemberService memberService;
     private final HttpSession httpSession;
+    private final FindPostsCond condition;
 
-    private FindPostsCond condition = new FindPostsCond();
 
     @GetMapping("/@{name}")
     public String profile(Model model,

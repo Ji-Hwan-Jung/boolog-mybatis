@@ -3,9 +3,7 @@ package com.stoph.boolog.web;
 import com.github.pagehelper.Page;
 import com.stoph.boolog.config.LoginMember;
 import com.stoph.boolog.config.dto.SessionMember;
-import com.stoph.boolog.domain.member.Member;
 import com.stoph.boolog.domain.posts.FindPostsCond;
-import com.stoph.boolog.domain.posts.Posts;
 import com.stoph.boolog.service.MemberService;
 import com.stoph.boolog.service.PostsService;
 import com.stoph.boolog.web.dto.PostsResponseDto;
@@ -13,9 +11,7 @@ import com.stoph.boolog.web.dto.PostsSaveRequestDto;
 import com.stoph.boolog.web.dto.PostsUpdateRequestDto;
 import com.stoph.boolog.web.lib.Paging;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -35,8 +30,8 @@ public class PostsController {
 
     private final PostsService postsService;
     private final MemberService memberService;
+    private final FindPostsCond condition;
 
-    private FindPostsCond condition = new FindPostsCond();
 
     //URL 리다이렉트
     @GetMapping("/posts")

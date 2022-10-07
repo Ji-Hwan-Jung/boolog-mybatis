@@ -2,9 +2,11 @@ package com.stoph.boolog.domain.posts;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @NoArgsConstructor
 @Getter
+@Component
 public class FindPostsCond {
 
     private String period;  //daily, weekly, monthly, yearly

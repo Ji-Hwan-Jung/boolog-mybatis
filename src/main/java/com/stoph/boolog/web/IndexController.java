@@ -1,6 +1,5 @@
 package com.stoph.boolog.web;
 
-import com.stoph.boolog.config.LoginMember;
 import com.stoph.boolog.domain.posts.FindPostsCond;
 import com.stoph.boolog.service.PostsService;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class IndexController {
 
     private final PostsService postsService;
-
-    private FindPostsCond condition = new FindPostsCond();
+    private final FindPostsCond condition;
 
     //메인화면
     @GetMapping("/")
