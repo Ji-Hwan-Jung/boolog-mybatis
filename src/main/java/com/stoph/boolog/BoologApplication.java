@@ -21,8 +21,4 @@ public class BoologApplication {
 		return new TestDataInit(postsRepository, memberRepository, passwordEncoder);
 	}
 
-	@Bean
-	public BCryptPasswordEncoder encodePwd() {
-		return new BCryptPasswordEncoder();
-	}
 }
