@@ -25,6 +25,7 @@ function updateName() {
     })
     .then((response) => response.text())
     .then((data) => {
+        document.querySelector('#profile').setAttribute('href', '/@' + name.value);
         toast.show();
     })
     .catch((error) => {
